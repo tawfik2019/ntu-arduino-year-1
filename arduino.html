@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Python to Arduino</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <style>
+        .black {
+            border : 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-default navbar-static-top">
+    <div class="container">
+        <!-- Logo -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index" class="navbar-brand">Arduino</a>
+        </div>
+
+        <!-- Menu Items -->
+        <div class="collapse navbar-collapse" id="mainNavBar">
+            <!-- Left Side -->
+            <ul class="nav navbar-nav">
+                <li><a href="#definingpins">Pins</a></li>
+                <li><a href="#definingvariables">Variables</a></li>
+                <li><a href="#setup">void setup</a></li>
+                <li><a href="#pinmode">pinMode</a></li>
+                <li><a href="#loop">void loop</a></li>
+                <li><a href="#delay">delay</a></li>
+                <li><a href="#digitalwrite">digitalWrite</a></li>
+                <li><a href="#digitalread">digitalRead</a></li>
+                <li><a href="#serial">Serial</a></li>
+                <li><a href="#analogread">analogRead</a></li>
+                <li><a href="#tone">tone</a></li>
+                <li><a href="#pulsein">pulseIn</a></li>
+            </ul>
+
+            <!-- Right Side -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="comparison">Comparison of Techniques</a></li>
+                <li><a href="labs">Labs</a></li>
+                <li><a href="arduino-simple">Simple Mode</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1 class="text-center">Learning Arduino</h1>
+    <hr />
+    <h1 class="text-center">Using Arduino</h1>
+    <p class="text-center">For comparisons between methods in Python and Arduino click 'Code Comparison Explanations' from the top right of the nav bar or click <a href="comparison.html" title="Arduino Explanations">here</a>.</p>
+    <div class="well">
+        <div id="definingpins">
+            <h2>Defining your pins</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p>You should define the pins you use are using as constants (either by <code>#define</code> or <code>const</code>) so you can easily refer to them throughout code and easily change if neccessary. You should keep them all together at the top of your code.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <p>Using <code>const</code>:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">const int REDLED = 2;</pre>
+                    <p>Using <code>#define</code>:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define REDLED 2</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="definingvariables">
+            <h2>Variables</h2>
+            <div class="row row-eq-height">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    You should define most the variables for data such as a threshold distance, or LDR sensor value to be used in comparisons, or button states, or the mode of operation you are currently in at the top of your program below your constants/pin constants/defines.
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int minDistance = 10;
+int userInput;</pre>
+                    <p>- Here I have declared and initialised a variable for the minimum distance for comparing againest ultrasonic sensor distance.</p>
+                    <p>- I have also declared a variable called userInput which has not yet been initialised. This will used later to when getting userInput from the serial monitor (explained below).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="setup">
+            <h2><code>void setup()</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p>The purpose of the <code>void setup()</code> function is to contain all the stuff we want to do when we start our Arduino application. This function is ran <b>once</b> at the beginning.</p>
+                    <p>The two common things you do in the <code>void setup()</code> are:
+                    <ul>
+                        <li>Setting pin modes (explained below)</li>
+                        <li>Beginning serial communication (explained below)</li>
+                    </ul></p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">void setup() {
+    // setting pinModes (explained below)
+    // begin serial communication (explained below)
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="pinmode">
+            <h2><code>pinMode(pin, mode)</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p>We use the <code>pinMode(pin, mode)</code> function to tell the Arduino how we want to use the pin. The common ones are <var>OUTPUT</var> and <var>INPUT</var>.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <p><code>pinMode(pin, mode)</code> function calls go inside the <code>void setup()</code> from last section:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">const int REDLED = 2
+
+void setup() {
+    pinMode(REDLED, OUTPUT);
+    // begin serial communication (explained below)
+}</pre>
+                    <p>We specify the pin we want to address using our constant and specify the mode <var>OUTPUT</var> as we want to output through this pin. We use <var>INPUT</var> when we want to read data from a pin, for example when using the ultrasonic sensor.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="loop">
+            <h2><code>void loop()</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p>The purpose of the <code>void loop()</code> function is to contain all the stuff we want to do over and over in our Arduino application. This function is ran <b>forever</b> after the <code>void setup()</code> has ran.</p>
+                    <p>This is where we will read from our pins, and output to the world or serial monitor (explained below).</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">void loop() {
+    // stuff to do forever
+}</pre>
+                    <p>This loop comes after the <code>void setup()</code>, an example is below:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">const int REDLED = 2
+
+void setup() {
+    pinMode(REDLED, OUTPUT);
+    // begin serial communication (explained below)
+}
+
+void loop() {
+    // stuff to do forever
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="delay">
+            <h2><code>delay(time_millieseconds)</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p>We use the <code>delay(time_millieseconds)</code> to 'pause' our program for a given time.</p>
+                    <br /><br /><br /><br />
+                    <p>We can also use <code>delayMicroseconds(time_microsends)</code></p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <p><code>delay(time_millieseconds)</code> example:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">delay(200)</pre><br />
+                    <p><code>delayMicrosends(time_microseconds)</code> example:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">delayMicroseconds(200)</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="digitalwrite">
+            <h2><code>digitalWrite(pin, value)</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p><code>digitalWrite(pin, value)</code> 'writes' a value to the specified pin. This is so we can send a pulse with our ultrasonic sensor or turn an LED on for example. The value argument can be either <var>LOW</var> or <var>HIGH</var>.</p>
+                    <p>We can call this function from any function, whether it be the <code>void loop()</code>, <code>void setup()</code> or one of our own. If we call it in the <code>void setup()</code>, it's typically to make definitely sure the pin is off and is not really neccesary.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <p>Usage:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">digitalWrite(REDLED, HIGH);</pre>
+                    <p>Using our previous example from <code>void loop()</code> combined with <code>delay</code>:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">const int REDLED = 2
+
+void setup() {
+    pinMode(REDLED, OUTPUT);
+    // begin serial communication (explained below)
+}
+
+void loop() {
+    digitalWrite(REDLED, HIGH);
+    delay(200);
+    digitalWrite(REDLED, LOW);
+    delay(200);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div id="digitalread">
+            <h2><code>digitalRead(pin)</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p><code>digitalRead(pin)</code> gives the value currently being read from the specified pin.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <p>Usage:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">digitalRead(BUTTONPIN)</pre>
+                    <p>Example using a button where we want to check the state of the button:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define BUTTONPIN 3
+                    
+int buttonState;
+
+void setup() {
+    pinMode(REDLED, INPUT);
+    // begin serial communication (explained below)
+}
+
+void loop() {
+    buttonState = digitalRead(BUTTONPIN);
+    Serial.println(buttonState); // explained below
+    delay(200);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="well">
+        <div id="serial">
+            <h2>Serial communication</h2>
+            <img src="assets/img/serial_monitor.png" alt="Serial Monitor Window" width="400" class="img-responsive pull-right">
+            <p>Serial communication is talking between the Arduino and another source. For this we will be using the serial monitor. This is where we can see variables/data from the Arduino or give the Arduino input.</p><br /><br />
+            <p>The serial monitor can be opened by pressing <kbd>ctrl + shift + m</kbd> or by pressing the icon at the right, as shown below:</p>
+            <img src="assets/img/serial_monitor_button.png" alt="Serial Monitor Icon" class="img-responsive center-block"><br /><br />
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <h3>Enabling Serial Communication</h3>
+                    <p>First, the Arduino needs to be told to use serial communication. This is done by typing <code>Serial.begin(&lt;baud_rate&gt;)</code> in our <code>void setup()</code> (example to the right).</p><br />
+                    <h3>Printing to Serial Monitor</h3>
+                    <p><ul>
+                        <li><code>Serial.println(&lt;message&gt;)</code> to print a line of text and advance to the next line</li>
+                        <li><code>Serial.print(&lt;message&gt;)</code> to just print a line of text to the screen with no advance.</li>
+                    </ul></p><br />
+                    <h3>Reading from Serial Monitor</h3>
+                    <ul>
+                        <li><code>Serial.available()</code> - this allows us to check if their is serial input to read, used with if statements</li>
+                        <li><code>Serial.read()</code> to read a byte (like a character)</li>
+                        <li><code>Serial.parseInt()</code> to read an integer</li>
+                        <li><code>Serial.parseFloat()</code> to read a float</li>
+                    </ul></p>
+                    <p>More information on serial communication available <a href="https://www.arduino.cc/reference/en/language/functions/communication/serial/#_functions" title="Serial Communication Functions">here</a>.<br /><br />To print a string a non-string variable using one <code>.print</code>/<code>.println</code>, you must first convert the variable to a string, shown with the Serial.print in the 'Reading Examples' to the right.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">void setup() {
+    Serial.begin(9600);
+}</pre>
+                    <p>9600 and 115200 are common ones. Just make sure what you type is the same as the dropdown from the serial monitor.</p>
+                    <p>Printing example:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">void loop() {
+    buttonState = digitalRead(BUTTONPIN);
+    Serial.println(buttonState); // example from above
+    delay(200);
+}</pre>
+                    <p>Reading examples:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int userInput;
+
+// other code
+
+void loop() {
+    if (Serial.available() > 0) {
+        userInput = Serial.parseInt()
+    }
+    
+    Serial.print("User entered " + String(userInput));
+    
+    delay(200);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="well">
+        <div id="analogread">
+            <h2><code>analogRead(pin)</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p>We use <code>analogRead(pin)</code> to read data from an analog component, such as a photoresistor. Will return a value between 0 and 1023.</p>
+                    <p class="bg-danger">Analog components must be connected to an 'analog in' pin on the Arduino or a digital pin with PWM (pins have ~ to denote this).</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    Usage:
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">analogRead(LDRPIN);</pre>
+                    <p>Example for say reading a value from LDR</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define LDRPIN 4
+
+// other code
+
+void loop() {
+    float LDRReading = analogRead(LDRPIN);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="well">
+        <div id="tone">
+            <h2>Tones - <code>tone(pin, frequency)</code> and - <code>noTone(pin)</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <h3>Using Tone</h3>
+                    <p>We use<code>tone(pin, frequency, [duration])</code> to generate a tone to be sent to a speaker of some sort connected to the specified pin with a specifed frequency. The duration is optional, if not specified it will go forever.</p>
+                    <h3>Stopping the Tone</h3>
+                    <p>To stop the turn we use <code>noTone(pin)</code>.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <p>Usage:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">tone(BUZZERPIN, 50);
+tone(BUZZERPIN, 50, 500)
+noTone(BUZZERPIN)</pre>
+                    <p>Example just making a buzzer buzz for half a second every half second:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define BUZZERPIN 5
+
+// other code
+
+void loop() {
+    tone(BUZZERPIN, 50);
+    delay(500);
+    noTone(pin);
+    delay(500);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="well">
+        <div id="pulsein">
+            <h2><code>pulseIn(pin, value)</code></h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Explanation</h2>
+                    <p>We use <code>pulseIn(pin, value)</code> to time how long a pulse lasts. We specify a pin to listen on and value is for the type of signal we want to time (<var>HIGH</var> or <var>LOW</var>).</p>
+                    <p>Once a signal of &lt;value&gt; has been detected, it will time how long (in microseconds) it lasts till the opposite of &lt;value&gt; is detected.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Example</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">pulseIn(PIN, HIGH);</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

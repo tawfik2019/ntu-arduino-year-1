@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Python to Arduino</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <style>
+        .black {
+            border : 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-default navbar-static-top">
+    <div class="container">
+        <!-- Logo -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index" class="navbar-brand">Arduino</a>
+        </div>
+
+        <!-- Menu Items -->
+        <div class="collapse navbar-collapse" id="mainNavBar">
+            <!-- Left Side -->
+            <ul class="nav navbar-nav">
+                <li><a href="#layout">Layout</a></li>
+                <li><a href="#variables">Variables</a></li>
+                <li><a href="#constants">Constants</a></li>
+                <li><a href="#if">If statements</a></li>
+                <li><a href="#for">For loops</a></li>
+                <li><a href="#while">While loops</a></li>
+                <li><a href="#forvswhile">For vs While loops</a></li>
+                <li><a href="#functions">Functions</a></li>
+            </ul>
+
+            <!-- Right Side -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="arduino">Arduino Guide</a></li>
+                <li><a href="labs">Labs</a></li>
+                <li><a href="comparison">Detail</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1 class="text-center">Python vs Arduino</h1>
+    <p class="bg-danger text-center"><b>The first conceptual demo of code for each section is done in Python (unless specified).</b></p>
+    <hr />
+    <h1 class="text-center">General comparison of techniques</h1>
+    <p class="text-center">For Arduino examples/explanations click 'Arduino Explanations' from the top right of the nav bar or click <a href="arduino.html" title="Arduino Explanations">here</a>.</p>
+    <p class="text-center bg-warning">Simple mode is just the comparison of code snippets. Very little extra text.</p>
+    <div class="well">
+        <div id="layout">
+            <h2>Layout</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">myNumber = 5
+if myNumber > 10:
+    print("Greater than 10")
+else:
+    print("Less than 10")</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int myNumber = 5;
+if (myNumber < 10) {
+    Serial.print("Greater than 10");
+} else {
+    Serial.print("Less than 10");
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="variables">
+            <h2>Variables</h2>
+            <div class="row row-eq-height">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">myInt = 5
+myFloat = 5.0
+myString = "Hello"</pre>
+                    <p>Generally:</p>
+                    <code>&lt;var_name&gt; = &lt;value&gt;</code>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int myInt = 5;
+float myFloat = 5.0;
+String myString = "Hello";</pre>
+                    Click <a
+                            href="https://playground.arduino.cc/Code/DatatypePractices"
+                            title="Data  types within Arduino"
+                            target="_blank">here</a> for more information regarding data types.<br /><br />
+                    <p>Generally:</p>
+                    <code>&lt;data_type&gt; &lt;var_name&gt; = &lt;value&gt;</code>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="constants">
+            <h2>Constants</h2>
+            <div class="row row-eq-height">
+                <div class="col-md-6">
+                    <h2><code>const</code> keyword</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">const int myInt = 5;
+const float myFloat = 5.0;
+const String myString = "Hello";</pre>
+                    <p>Generally:</p>
+                    <code>const &lt;data_type&gt; &lt;const_name&gt; = &lt;value&gt;;</code>
+                </div>
+                <div class="col-md-6">
+                    <h2><code>#define</code></h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define NUMBER 5
+                    
+// Using the value:
+Serial.println(NUMBER);</pre>
+                    <p class="bg-warning"><b>Notice there is no '=' between the name and value.</b></p>
+                    The precompiler will convert the previous code snippit to the following:
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">// Using the value:
+Serial.println(5);</pre>
+                    <p>Generally:</p>
+                    <p><code>#define &lt;name&gt; &lt;value&gt;</code></p>
+                    <p>Using in code:</p>
+                    <p><code>name</code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="if">
+            <h2>If Statements</h2>
+            Concept:
+            <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">if &lt;condition&gt;:
+    // do this
+else if &lt;another_condition&gt;:
+    // do this instead
+else:
+    // do this if others all false</pre>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">myNumber = 5
+if myNumber > 10:
+    print("Greater than 10")
+else:
+    print("Less than 10")</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int myNumber = 5;
+if (myNumber < 10) {
+    Serial.print("Greater than 10");
+} else {
+    Serial.print("Less than 10");
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="while">
+            <h2>While loops</h2>
+            Concept:
+            <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">while &lt;condition&gt;:
+    // do this
+    // can break out of while loop using 'break' (for both Python and Arduino)
+</pre>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">counter = 0
+while counter < 5:
+    print(counter)
+    counter += 1</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int counter = 0;
+while (counter < 5) {
+    Serial.print(counter);
+    counter++;
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="for">
+            <h2>For loops</h2>
+            Concept:
+            <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">for &lt;temp_variable&gt; in range(&lt;start&gt;, &lt;end&gt;, &lt;step&gt;):
+    // do this
+</pre>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">for i in range(1, 11, 2):
+    print(i)</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <p>Syntax:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">for (&lt;datatype&gt; &lt;var&gt; = &lt;start&gt;; &lt;var&gt; &lt; &lt;end&gt;; &lt;var&gt;++)</pre>
+                    <p>Example:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">for (int i = 1; i < 11; i += 2) {
+    Serial.print(i);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div id="forvswhile">
+            <h2>For vs While loops (Comparison)</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>While loops</h2>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">int counter = 0;
+while (counter < 5) {
+    Serial.print(counter);
+    counter++;
+}</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>For loops</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">for (int i = 0; i < 5; i++) {
+    Serial.print(i);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div id="functions">
+            <h2>Functions</h2>
+            Concept:
+            <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">def &lt;function_name&gt;(&lt;any_arguments_comma_separated&gt;) :
+    // do this
+    // maybe return &lt;value&gt; (not neccesssary - function may just 'do' something i.e print something)
+</pre>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <p>Example of function that has return:</p>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">def add(num1, num2):
+    result = num1 + num2
+    return result</pre>
+                    <p>Example of function that has return:</p>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">def sayName(name):
+    print(name)</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <p>Syntax (<code>data_type</code> is <code>void</code> when function doesn't return anything, example below):</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">&lt;data_type&gt; &lt;funct_name&gt;(&lt;data_type&gt; &lt;name_within_funct&gt;, [more]) {
+    // do this
+    // maybe return &lt;value&gt;;
+}</pre>
+                    <p>Example of function that has return:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">float add(float num1, float num2) {
+    float result = num1 + num2;
+    return result;
+}</pre>
+                    <p>Example of function that no return:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">void sayName(String name) {
+    Serial.println(name);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

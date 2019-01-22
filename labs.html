@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Python to Arduino</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <style>
+        .black {
+            border : 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-default navbar-static-top">
+    <div class="container">
+        <!-- Logo -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index" class="navbar-brand">Arduino</a>
+        </div>
+
+        <!-- Menu Items -->
+        <div class="collapse navbar-collapse" id="mainNavBar">
+            <!-- Left Side -->
+            <ul class="nav navbar-nav">
+                <li><a href="#lab1">Lab 1</a></li>
+                <li><a href="#lab2">Lab 2</a></li>
+                <li><a href="#lab3">Lab 3</a></li>
+                <li><a href="#lab4">Lab 4</a></li>
+                <li><a href="#lab5">Lab 5</a></li>
+                <li><a href="#lab6">Lab 6</a></li>
+            </ul>
+
+            <!-- Right Side -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="comparison">Comparison of Techniques</a></li>
+                <li><a href="arduino">Arduino Guide</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1 class="text-center">Arduino Labs</h1>
+    <hr />
+    <h1 class="text-center">Using Arduino</h1>
+    <p class="text-center">For comparisons between methods in Python and Arduino click 'Code Comparison Explanations' from the top right of the nav bar or click <a href="comparison.html" title="Arduino Explanations">here</a>.</p>
+    
+    <div class="well">
+        <div id="lab1">
+            <h2>Lab 1 - Arduino IDE Introduction</h2>
+            <h3>Summary</h4>
+            <p>Lab 1 is literally just opening the Arduino IDE and plugging in the Arduinio. Don't forget to make sure you have right board and COM port selected from the 'Tools' dropdown menu.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Step-by-step</h2>
+                    <p>
+                    <ol>
+                        <li>Open Arduino IDE</li>
+                        <li>Open example sketch 'blink' - File -> Examples -> 0.1 Basics -> Blink</li>
+                    </ol>
+                    </p>
+                    <h2>Explanation</h2>
+                    <p>In the <code>void setup()</code> the pin mode of pin <code>LED_BUILTIN</code> (constant built into Arduino language - is the 'L' LED on the Arduino itself, also connected to digital pin 13) is set to be an <var>OUTPUT</var>.</p>
+                
+                    <p>In the loop we use <code>digitalWrite</code> to set the voltage of the <code>LED_BUILTIN</code> to <var>HIGH</var>. We then use a <cpde>delay</cpde> to wait a second. We then set the voltage to 0 using <code>digitalWrite</code> again with <var>LOW.</var></p>
+                
+                </div>
+                <div class="col-md-6">
+                    <h2>Code</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);                       // wait for a second
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="lab2">
+            <h2>Lab 2 - Using LED</h2>
+            <h3>Summary</h4>
+            <p>Lab 2 extends on Lab 1 by connecting an external LED.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Step-by-step</h2>
+                    <p>
+                    <ol>
+                        <li>Open Arduino IDE</li>
+                        <li>Open example sketch 'blink' - File -> Examples -> 0.1 Basics -> Blink</li>
+                        <li>Connect circuit:</li>
+                        <ol>
+                            <li>Connect cable from pin 13 to a row on breadboard</li>
+                            <li>Connect 220&Omega; or higher resistor from same row as above to another row</li>
+                            <li>Connect <b>long</b> leg of LED to the row above and the <b>short</b> leg to another row</li>
+                            <li>Connect cable from short leg to GND on Arduino</li>
+                            <a href="assets/img/arduino_lab_2_img_1.jpg" title="View Large" target="_blank"><img src="assets/img/arduino_lab_2_img_1.jpg" alt="Circuit" class="img-responsive img-rounded"/></a>
+                        </ol>
+                        <li>Lab says change both delays to 500 (blinking rate will increase...)</li>
+                        <li>Lab says change both delays to 5000 (blinking rate will decrease...)</li>
+                        <li>Lab says user higher value resistor (Larger resistance value = dimmer LED)</li>
+                    </ol>
+                    </p>
+                    <h2>Explanation</h2>
+                    <p>See lab 1.</p>
+                
+                </div>
+                <div class="col-md-6">
+                    <h2>Code</h2>
+                    <i>Same as Lab 1</i>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);                       // wait for a second
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="lab3">
+            <h2>Lab 3 - Introducing Serial Monitor and Buzzer</h2>
+            <h3>Summary</h4>
+            <p>Lab 3 extends on Lab 2 by controlling the LED with the Serial Monitor, and adding a buzzer.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Step-by-step</h2>
+                    <p>
+                    <ol>
+                        <li>Connect circuit same as Lab 2</li>
+                        <li>Open Arduino IDE</li>
+                        <li>Open new sketch and paste template code (to the right)</li>
+                        <li>Move LED from pin 13 to pin 9</li>
+                        <li>Run sketch and open serial monitor (icon top right or <kbd>ctrl + shift + m</kbd>)</li>
+                        <ul>
+                            <li>Sending a 1 should turn LED on</li>
+                            <li>Sending a 0 (or anything but 1) should turn LED off</li>
+                        </ul>
+                        <li>Add a buzzer in the same manor as the LED to pin 6(instead of longer leg, one side marked +)</li>
+                        <a href="assets/img/arduino_lab_3_img_1.jpg" title="View Large" target="_blank"><img src="assets/img/arduino_lab_3_img_1.jpg" alt="Circuit" class="img-responsive img-rounded"/></a>
+                        <li>Labs says to modify code so buzzer turns on when 't' is sent and turn off when 'd' is sent. (Modify the switch statement - see final code if stuck)</li>
+                    </ol>
+                    </p>
+                    <h2>Explanation</h2>
+                    <p>Same as Lab 1 apart from instead of <code>LED_BUILTIN</code>, use the led pin constant/variable. Instead of <code>digitalWrite</code> for the buzzer, we use <code>tone</code> and <code>noTone</code> explained <a href="arduino#tone" title="tone/noTone explanation">here</a>.
+                </div>
+                <div class="col-md-6">
+                    <h2>Code</h2>
+                    <h3>Template</h3>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">// Pin 9 will be used for the long lead of the LED.
+int led = 9;
+
+// This is the varable to hold the user serail input
+char inVal;
+
+// The setup routine runs once when you press reset:
+void setup() {
+  pinMode(led, OUTPUT); // Initialize the digital pin as an output.
+  Serial.begin(115200);
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+  if (Serial.available() > 0) {
+    inVal = Serial.read();
+    switch (inVal) {
+      case '0':
+        digitalWrite(led, LOW);
+        break;
+      case '1':
+        digitalWrite(led, HIGH);
+        break;
+      default:
+        digitalWrite(led, LOW);
+    }
+  }
+}</pre>
+                    <h3>Final Code</h3>
+                    <span class="bg-warning">NOTE I changed int pin to <code>#define</code>... sorry!</span>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define LED 9
+#define BUZ 6
+
+// This is the varable to hold the user serial input
+char inVal;
+
+void setup() {
+  // Initialize the digital pin as an output.
+  pinMode(led, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    inVal = Serial.read();
+    switch (inVal) {
+      case '0':
+        digitalWrite(led, LOW);
+        break;
+      case '1':
+        digitalWrite(led, HIGH);
+        break;
+      case 't':
+        tone(buz, 100);
+        break;
+      case 'd':
+        noTone(buz);
+        break;
+      default:
+        digitalWrite(led, LOW);
+        noTone(buz);
+    }
+  }
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="lab4">
+            <h2>Lab 4 - Introducing LDR</h2>
+            <h3>Summary</h4>
+            <p>Lab 4 introduces a photoresisior (light dependant resistor (LDR)).</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Step-by-step</h2>
+                    <p>
+                    <ol>
+                        <li>Open Arduino IDE</li>
+                        <li>Connect circuit:</li>
+                        <ol>
+                            <li>Connect cable from GND to a row on breadboard</li>
+                            <li>Connect 10k&Omega; resistor from same row as above to another row</li>
+                            <li>Connect <b>either</b> leg of LDR to the row above and other leg to another row</li>
+                            <li>Connect cable from the leg <b>not</b> connected to resistor to 5V on Arduino</li>
+                            <li>Connect cable from row with one leg of both the resistor and LDR to an analog in pin (use 0)</li>
+                            <a href="assets/img/arduino_lab_4_img_1.jpg" title="View Large" target="_blank"><img src="assets/img/arduino_lab_4_img_1.jpg" alt="Circuit" class="img-responsive img-rounded"/></a>
+                        </ol>
+                        <li>Run sketch and open serial monitor (icon top right or <kbd>ctrl + shift + m</kbd>)</li>
+                        <ul><li>You should see the values decrease when the sensor is covered</li></ul>
+                        <li>Lab says change the resistor value and describe how this could be used a calibration mechanism</li>
+                        <li>Lab says modify the code so when LDR reading is below a threshold it should blink 5 times (if statement with a for loop side - see finish code if stuck) - connect LED as in lab 2 to pin 13:</li>
+                         <a href="assets/img/arduino_lab_4_img_2.jpg" title="View Large" target="_blank"><img src="assets/img/arduino_lab_4_img_2.jpg" alt="Circuit" class="img-responsive img-rounded"/></a>
+                    </ol>
+                    </p>
+                    <h2>Explanation</h2>
+                    <p>In the <code>void setup</code> we beign serial commuincation (explained <a href="arduino#serial" title="Serial commuincation">here</a>). We don't need to use <code>pinMode</code> for the LDR analog in pin as the pin is analog only so it's implied it will be <var>INPUT</var>.</p>
+                    <p>In the <code>void loop</code> we use <code>analogRead</code> to read the value from our LDR pin. We then calculate the voltage (5000 = 5V, 1024 is range of values as the <code>analogRead</code> returns number between 0 and 1023). We then output that to the scree using <code>Serial.print</code></p>
+                    <p>For the final part we had a <code>if</code> statement to check if the LDR value is below a threshold (I used 50 as that worked for my surrounds when I covered it), if so use a for loop (explained <a href="comparison#for" title="For Loop Explanation">here</a>) to blink the LED 5 times.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Code</h2>
+                    <h3>Template</h3>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int sensorPin = A0;
+unsigned int sensorValue = 0;
+float voltage;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  sensorValue = analogRead(sensorPin);
+  voltage = sensorValue * (5000.0 / 1024.0);
+  Serial.print("Sensor Output: ");
+  Serial.println(sensorValue);
+  Serial.print("Voltage (mv): ");
+  Serial.println(voltage);
+  Serial.println();
+  delay(5000);
+}</pre>
+                    <h3>Final Code</h3>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int sensorPin = A0;
+int ledPin = 13;
+unsigned int sensorValue = 0;
+float voltage;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  sensorValue = analogRead(sensorPin);
+  voltage = sensorValue * (5000.0 / 1024.0);
+  Serial.print("Sensor Output: ");
+  Serial.println(sensorValue);
+  Serial.print("Voltage (mv): ");
+  Serial.println(voltage);
+  Serial.println();
+
+  if (sensorValue < 50) {
+    for (int i = 0; i < 5; i++) {
+      digitalWrite(ledPin, HIGH);
+      delay(200);
+      digitalWrite(ledPin, LOW);
+      delay(200);
+    }
+  }
+
+  delay(5000);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="well">
+        <div id="lab5">
+            <h2>Lab 5 - Introducing Ultrasonic sensor</h2>
+            <h3>Summary</h4>
+            <p>Lab 5 introduces a ultrasonic sensor to detect distance.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Step-by-step</h2>
+                    <p>
+                    <ol>
+                        <li>Place ultrasonic sensor on breadboard across 4 rows</li>
+                        <li>Connect cable from 5V to V<subscript>cc</subscript> on sensor</li>
+                        <i>If you're using the uni kit, the pinout for your ultrasonic sensor is as follows:</i>
+                        <a href="assets/img/ultrasonic_sensor_uni_pinout.jpg" title="View Large" target="_blank"><img src="assets/img/ultrasonic_sensor_uni_pinout.jpg" alt="Pinout" class="img-responsive img-rounded"/></a>
+                        <li>Connect cable from pin 12 to trig on sensor</li>
+                        <li>Connect cable from pin 13 to echo on sensor</li>
+                        <li>Connect cable from an Arduino GND to gnd on sensor</li>
+                        <a href="assets/img/arduino_lab_5_img_1.jpg" title="View Large" target="_blank"><img src="assets/img/arduino_lab_5_img_1.jpg" alt="Circuit" class="img-responsive img-rounded"/></a>
+                        <li>Open Arduino IDE</li>
+                        <li>Open new sketch and paste template code (to the right)</li>
+                        <li>Run sketch and open serial monitor (icon top right or <kbd>ctrl + shift + m</kbd></li>
+                        <li>Place flat obect in front of sensor (hand makes it really dodgy)</li>
+                        <ul>
+                            <li>As you vary distance of object you should see this reflected in serial monitor</li>
+                        </ul>
+                        <li>Labs says to modify code so when object is less than 10cm away LED blinks 5 times (if statement with a for loop side - see finish code if stuck)</li>
+                    </ol>
+                    </p>
+                    <h2>Explanation</h2>
+                    <p>In the <code>void setup</code> we begin serial commuincation (explained <a href="arduino#serial" title="Serial commuincation">here</a>). We use <code>pinMode</code> to set ECHOPIN and TRIGPIN to <var>INPUT</var> and <var>OUTPUT</var> (trigger is what causes the ultrasonic sensor to send a pulse and echo is what receives the pulse).</p>
+                    <p>In the <code>void loop</code> we use <code>digitalWrite</code> to send a <var>HIGH</var> value to our TRIGPIN, <code>delay</code> for 10 microsends to allow for the ping to come back to the sensor and then use <code>digitalWrite</code> to send a <var>LOW</var> to the TRIGPIN as we don't need it to send out pulses anymore. We then use <code>pulseIn</code> (explained <a href="arduino#pulsein" title="pulseIn Explanation">here</a>) to get the time in microsconds for the singal to travel to the object and bounce back, <span class="bg-danger">this is stored in a variable called distance - this is an awful name at this moment in time as what it actually stores is the amount of microseconds it took to travel to the object and back</span>. The next line converts it to a distance by dividing by 58 (58 is derived by the fact sound travels at 343m/s which is 29.155 cm/microsecond then divide by 2 as time is for to object and back from object.</p>
+                    <p>For the final part we had a <code>if</code> statement to check if the distance variable is below a 10cm, if so use a for loop (explained <a href="comparison#for" title="For Loop Explanation">here</a>) to blink the LED 5 times.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Code</h2>
+                    <h3>Template</h3>
+                    <span class="bg-warning">NOTE I changed <code>ECHOPIN</code> and <code>TRIGPIN</code> to 13 and 12 (originally 3 and 2)</span>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define ECHOPIN 13
+#define TRIGPIN 12
+float distance;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(ECHOPIN, INPUT);
+  pinMode(TRIGPIN, OUTPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  digitalWrite(TRIGPIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIGPIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGPIN, LOW);
+  distance = pulseIn(ECHOPIN, HIGH); // return 0 if no high pulse in 1sec
+  distance = distance / 58;
+  Serial.print(distance);
+  Serial.println("cm");
+  delay(200);
+}</pre>
+                    <h3>Final Code</h3>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define ECHOPIN 13
+#define TRIGPIN 12
+#define LEDPIN 3
+float distance;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(ECHOPIN, INPUT);
+  pinMode(TRIGPIN, OUTPUT);
+  pinMode(LEDPIN, OUTPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  digitalWrite(TRIGPIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIGPIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGPIN, LOW);
+  distance = pulseIn(ECHOPIN, HIGH); // return 0 if no high pulse in 1sec
+  distance = distance / 58;
+  Serial.print(distance);
+  Serial.println("cm");
+
+  if (distance < 10) {
+    for (int i = 0; i < 5; i++) {
+      digitalWrite(LEDPIN, HIGH);
+      delay(200);
+      digitalWrite(LEDPIN, LOW);
+      delay(200);
+    }
+  }
+
+  delay(200);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="well">
+        <div id="lab6">
+            <h2>Lab 6 - Introducing Bluetooth Module</h2>
+            <h3>Summary</h4>
+            <p>Lab 6 introduces a bluetooth module allowing for bluetooth control of a LED and buzzer.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Step-by-step</h2>
+                    <p>
+                    <ol>
+                        <li>Connect circuit:</li>
+                        <ol>
+                            <li>Place bluetooth modem on breadboard across six rows (first noting the layout of pins)</li>
+                            <li>Connect cable from Arduino pin 0-<abbr title="Recieve">RX</abbr> to row of breadboard with bluetooth pin <abbr title="Transmit">TX</abbr>-O</li>
+                            <li>Connect cable from Arduino pin 1-<abbr title="Transmit">TX</abbr> to row of breadboard with bluetooth pin <abbr title="Recieve">RX</abbr>-I</li>
+                            <li>Connect cable from Arduino 3.3v to the row of breadboard with bluetooth pin V<subscript>cc</subscript></li>
+                            <li>Connect cable from an Arduino GND to the row of breadboard with bluetooth pin GND</li>
+                            <li>Add a LED to the circuit as shown in <a href="#lab2" title="Review how to connect LED">lab 2</a>, connecting LED to digital pin 9</li>
+                            <li>Add a buzzer to the circuit as shown in <a href="#lab3" title="Review how to connect buzzer">lab 3</a>, connecting buzzer to digital pin 8</li>
+                            <a href="assets/img/arduino_lab_6_img_1.jpg" title="View Large" target="_blank"><img src="assets/img/arduino_lab_6_img_1.jpg" alt="Circuit" class="img-responsive img-rounded"/></a>
+                        </ol>
+                        <li>Open Arduino IDE</li>
+                        <li>Open new sketch and paste template code (to the right)</li>
+                        <li>Upload sketch to the Arduino <span class="bg-warning">(may have to disconnect the 0-RX and 1-TX pins on the Arduino for the code to upload as bluetooth serial commuincation may interfere with the serial USB cable)</span></li>
+                        <li>Plug in USB bluetooth reciever and wait for install</li>
+                        <li>Add a new bluetooth device via "Bluetooth Devices" (on windows). Will be called RN42-&lt;last 4 digits of MAC address&gt;, eg RN42-5064, pairing code is <b>1234</b></li>
+                        <li>Note the COM port of the bluetooth device by opening the properties of the RN42 modem via "Devices and printers" screen (windows)</li>
+                        <li>Open Putty (download from <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" title="Putty">here</a>)</li>
+                        <or>
+                            <li>Select 'Serial' as the connect type</li>
+                            <li>Enter the COM port you noted earlier, i.e COM6</li>
+                            <li>Enter the speed as defined by your <code>Serial.begin(&lt;baud_rate&gt;)</code> in <code>void setup()</code>, 115200 is in the template</li>
+                            <li>Select open. The small "Connect" LED on the bluetooth modem shoud go green after a moment.</li>
+                            <li>From the new window, enter 1 and LED should light up for 2 seconds (you can't see your input as you're typing from this window)</li>
+                            <li>From the window, enter anything else and the buzzer should sound for 2 seconds</li>
+                        </or>
+                    </ol>
+                    </p>
+                    <h2>Explanation</h2>
+                    <p>The concepts in this lab are all the same as <a href="#lab3" title="Lab 3">lab 3</a>, we're just using putty as out serial monitor basically (and this template code uses a if/else statement rather than a switch statement).</p>
+                
+                </div>
+                <div class="col-md-6">
+                    <h2>Code</h2>
+                    <h3>Template</h3>
+                    <i>There are no changes to the code for this lab</i>
+                    <p class="bg-danger"><b>This code snippit contains <abbr title="Number that just appear in the code which should really be a variable to make the code easier to maintain and read for yourself and others.">magic numbers</abbr> for the pin number (should also be a variable/constant for the tone frequency)</b></p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int led = 9; // use digital pin 9 for the led
+char inVal; // use this to read a character from the serial monitor
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(led, OUTPUT); // initialise digital pin 9 for output
+  Serial.begin(115200); // set the Baudrate to 115200 on putty as well.
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if (Serial.available() > 0) {
+    inVal = Serial.read();
+
+    if (inVal == '1') { // if you enter 1 the LED will turn ON
+      digitalWrite(led, HIGH);
+      noTone(8);
+      Serial.println("You entered 1");
+      delay(2000); // wait for 2 seconds
+    } else { // if you enter any charater the buzzer sounds
+      digitalWrite(led, LOW);
+      tone(8, 262);
+      Serial.print("You entered ");
+      Serial.println(inVal);
+      delay(2000); // wait for 2 seconds
+    }
+  } else {
+    // if there is no input from the serial line, turn the sound and LED off
+    digitalWrite(led, LOW);
+    noTone(8);
+  }
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

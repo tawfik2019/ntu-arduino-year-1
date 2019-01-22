@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Python to Arduino</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <style>
+        .black {
+            border : 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-default navbar-static-top" id="go-to-top">
+    <div class="container">
+        <!-- Logo -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index" class="navbar-brand">Arduino</a>
+        </div>
+
+        <!-- Menu Items -->
+        <div class="collapse navbar-collapse" id="mainNavBar">
+            <!-- Left Side -->
+            <ul class="nav navbar-nav">
+                <li><a href="#layout">Layout</a></li>
+                <li><a href="#variables">Variables</a></li>
+                <li><a href="#constants">Constants</a></li>
+                <li><a href="#if">If statements</a></li>
+                <li><a href="#for">For loops</a></li>
+                <li><a href="#while">While loops</a></li>
+                <li><a href="#forvswhile">For vs While loops</a></li>
+                <li><a href="#functions">Functions</a></li>
+            </ul>
+
+            <!-- Right Side -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="arduino">Arduino Guide</a></li>
+                <li><a href="labs">Labs</a></li>
+                <li><a href="comparison-simple">Simple</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1 class="text-center">Python vs Arduino</h1>
+    <p class="bg-danger text-center"><b>The first conceptual demo of code for each section is done in Python (unless specified).</b></p>
+    <hr />
+    <h1 class="text-center">General comparison of techniques</h1>
+    <p class="text-center">For Arduino examples/explanations click 'Arduino Explanations' from the top right of the nav bar or click <a href="arduino.html" title="Arduino Explanations">here</a>.</p>
+    <p class="text-center bg-warning">I use <code>Serial.println()</code> mutliple times through the Arduino code examples. This is essentially just a <code>print</code> statement, explained <a href="arduino.html#serial">here</a>.</p>
+    <div class="well">
+        <div id="layout">
+            <h2>Layout</h2>
+            <p>All statements in Python are separated by <i>new lines</i> whereas with Ardunio (and most other languages)
+               they
+               are done with a semi colon (<code>;</code>).</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <p>The layout of Python code is important as it is indentation based. Python determines what
+                       is
+                       within a
+                       if statement by reading the line with, for example, <code>if</code> on it, then going to the next
+                        <i>indented</i> line. It determines the end of the <code>if</code> block when it comes across
+                       code
+                        <i>less</i> indented than the previous line.</p>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">myNumber = 5
+if myNumber > 10:
+    print("Greater than 10")
+else:
+    print("Less than 10")</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <p>Arduino (and most other programming languages) work instead with braces (<code>{</code> and
+                        <code>}</code>)
+                       to specify what is within a block of code, indentation does not matter to the program, however it
+                       is
+                       still
+                       good practice to indent as you would in Python for readability.</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int myNumber = 5;
+if (myNumber < 10) {
+    Serial.print("Greater than 10");
+} else {
+    Serial.print("Less than 10");
+}</pre>
+                    <p>The following however would also work perfectly in Arduino, but is less readable (and you <b>may</b> lose
+                       marks on
+                       code for poor/inconsistent layout):</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int myNumber = 5;
+if (myNumber < 10) {Serial.print("Greater than 10")   ;
+} else { Serial.print("Less than 10");}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="variables">
+            <h2>Variables</h2>
+            <p>The data type of the variable in python is determined by the interpreter, so you do not specify a type.
+               In
+               Arduino you have to specify a type. The common types you’ll be using are:</p>
+            <ul>
+                <li>int - <i>2 byte integer</i></li>
+                <li>float - <i>4 byte decimal number</i></li>
+                <li>string - <i>1 byte per character array (strings are just arrays of characters)</i></li>
+            </ul>
+            <div class="row row-eq-height">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    The way python declares variables is as so:
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">myInt = 5
+myFloat = 5.0
+myString = "Hello"</pre>
+                    Python doesn't really care and will just work it out based on context, and sometimes will convert
+                    between
+                    data types depending on what you try to do with it. This is allowed as Python can dynamically
+                    (meaning
+                    at
+                    run time) allocate memory at will, where as with Arduino you have to do this yourself (although you
+                    won't
+                    need it for purposes of this project as you have declared all variables at compile time).<br /><br />
+                    <p>Generally:</p>
+                    <code>&lt;var_name&gt; = &lt;value&gt;</code>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    Arduino requires you to specify a type for the variable:
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int myInt = 5;
+float myFloat = 5.0;
+String myString = "Hello";</pre>
+                    This is so that the compiler knows how much memory to set aside for the variable as space is limited
+                    with in
+                    the Ardunio and you need to decide how memory is allocated (by specifying a data type). Information
+                    on
+                    the
+                    remaining data types and their memory allocations click <a
+                            href="https://playground.arduino.cc/Code/DatatypePractices"
+                            title="Data  types within Arduino"
+                            target="_blank">here</a>.<br /><br /><br />
+                    <p>Generally:</p>
+                    <code>&lt;data_type&gt; &lt;var_name&gt; = &lt;value&gt;;</code>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="constants">
+            <h2>Constants</h2>
+            <p>Python doesn't support constants. A constant is a value in memory that cannot be changed.<br /><br />There are two ways to make a 'constant', sort of. Explained below.</p>
+            <div class="row row-eq-height">
+                <div class="col-md-6">
+                    <h2><code>const</code> keyword</h2>
+                    To tell the compiler you don't want the variable to change, you put <code>const</code> before the data type of the constant:
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">const int myInt = 5;
+const float myFloat = 5.0;
+const String myString = "Hello";</pre>
+                    This prevents you from changing the values during run time. In Arduino, typicaly used for pins (as explained <a href="arduino#definingpins">here</a>)<br /><br />
+                    <p>Generally:</p>
+                    <code>const &lt;data_type&gt; &lt;const_name&gt; = &lt;value&gt;;</code>
+                </div>
+                <div class="col-md-6">
+                    <h2><code>#define</code></h2>
+                    You can use #define too. Lines beginning with # are preprocessor directives (in short, before your code is complied these are carried out). <code>#define</code> basically allows you to perform an automatic fine/replace. You define a value and assign it a name for use in code. The preprocessor will find all of the instances of the name (which is typically in caps) in your code and swap it out for your value:
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">#define NUMBER 5
+                    
+// Using the value:
+Serial.println(NUMBER);</pre>
+                    <p class="bg-warning"><b>Notice there is no '=' between the name and value.</b></p>
+                    <p class="bg-warning"><b>Notice <code>#define</code> lines <b>don't</b> end with a <code>;</code></b></p>
+                    The precompiler will convert the previous code snippit to the following:
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">// Using the value:
+Serial.println(5);</pre>
+                    <p>Generally:</p>
+                    <p><code>#define &lt;name&gt; &lt;value&gt;</code></p>
+                    <p>Using in code:</p>
+                    <p><code>name</code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="if">
+            <h2>If Statements</h2>
+            Concept of if statements is the same.
+            <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">if &lt;condition&gt;:
+    // do this
+else if &lt;another_condition&gt;:
+    // do this instead
+else:
+    // do this if others all false</pre>
+            <p>The below examples are from the layout section so are already explained, but here again:</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <p>Python uses indentation, brackets around condition are optional.</p><br />
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">myNumber = 5
+if myNumber > 10:
+    print("Greater than 10")
+else:
+    print("Less than 10")</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <p>Arduino uses <code>{</code> and <code>}</code> to contain the blocks of code, i.e the body of the
+                       if
+                       statement. Brackets around the condition are <b>compulsory</b>.</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int myNumber = 5;
+if (myNumber < 10) {
+    Serial.print("Greater than 10");
+} else {
+    Serial.print("Less than 10");
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="while">
+            <h2>While loops</h2>
+            Concept of while loops is the same.
+            <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">while &lt;condition&gt;
+    // do this
+    // can break out of while loop using 'break' (for both Python and Arduino)
+</pre>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <p>Python uses indentation, brackets around condition are optional.</p><br />
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">counter = 0
+while counter < 5:
+    print(counter)
+    counter += 1</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <p>Arduino uses <code>{</code> and <code>}</code> to contain the blocks of code, i.e the body of the
+                       while loop. Brackets around the condition are <b>compulsory</b>.</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int counter = 0;
+while (counter < 5) {
+    Serial.print(counter);
+    counter++;
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <div id="for">
+            <h2>For loops</h2>
+            Concept of for loops is the same, although they are defined different.
+            <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">for &lt;temp_variable&gt; in range(&lt;start&gt;, &lt;end&gt;, &lt;step&gt;):
+    // do this
+</pre>
+            <p>We go from the <i>start</i> variable up to (but not including) the <i>end</i> variable with an increment of <i>step</i> so <code>range(1, 11, 2)</code> gives an output of <code>1, 3, 5, 7, 9</code> (notice no 11). Both the example below use this start, end and step and produce the same result.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <p>Python uses indentation, brackets around for condition (the <code>i in range(1, 11, 2)</code> part) are optional.</p><br />
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">for i in range(1, 11, 2):
+    print(i)</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <p>Arduino uses <code>{</code> and <code>}</code> to contain the blocks of code, i.e the body of the
+                       for loop. Brackets around the condition are <b>compulsory</b>.</p>
+                    <p>Ardunio also has start, end and step, just no range function. The header for a for loop is split into the same for parts, specifing a starting a value, some value to cause it to stop and how to change after each iteration, each separated by a <code>;</code>. General syntax is:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">for (&lt;datatype&gt; &lt;var&gt; = &lt;start&gt;; &lt;condition&gt;; &lt;step&gt;)</pre>
+                    <p><i>Note: &lt;condition&gt; and &lt;step&gt; are given in terms of &lt;var&gt;, see below example.</i></p>
+                    <p>You need to declare the variable <code>i</code> (call it anything) in the first section, in the second section is the condition (i.e what causes the end) and finally the step or how to change after each iteration.</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">for (int i = 1; i < 11; i += 2) {
+    Serial.print(i);
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div id="forvswhile">
+            <h2>For vs While loops (Comparison)</h2>
+            The same thing can be accomplished with both a for loop and a while loop. A for loop is typically used when you know the range you want to iterate through whereas a while loop you use when you don't know or can't find out via something like user input. The comparison is done using Arduino code.
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>While loops</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">int counter = 0;
+while (counter < 5) {
+    Serial.print(counter);
+    counter++;
+}</pre>
+                <p>A separate counter variable has to be declared <b>and</b> initialised outside of the loop, you must remember to increment it at the end of the while loop.</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>For loops</h2>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">for (int i = 0; i < 5; i++) {
+    Serial.print(i);
+}</pre>
+                    <p>The counter variable initialisation, condition and incrementation code is all on one line and looks tidier.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div id="functions">
+            <h2>Functions</h2>
+            Concept of functions is the same, although they are defined slightly different.
+            <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">def &lt;function_name&gt;(&lt;any_arguments_comma_separated&gt;) :
+    // do this
+    // maybe return &lt;value&gt; (not neccesssary - function may just 'do' something i.e print something)
+</pre>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Python</h2>
+                    <p>Python uses indentation. Python knows you want to create a function as you typed <code>def</code> (define), the next bit is the name of the function, followed by any arguments the function may take in brackets, separated by commas. The function body is then indented. If the function returns something, then the return will give the result back to the caller.</p>
+                    <p>Example of function that has return:</p>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">def add(num1, num2):
+    result = num1 + num2
+    return result</pre>
+                    <p>Example of function that has return:</p>
+                    <pre><img src="assets/img/python.png" alt="Python" class="pull-right" width="25">def sayName(name):
+    print(name)</pre>
+                </div>
+                <div class="col-md-6">
+                    <h2>Arduino</h2>
+                    <p>Arduino uses <code>{</code> and <code>}</code> to contain the blocks of code, i.e the body of the
+                       function. Brackets around the condition are <b>compulsory</b>. Functions in Arduino require a type, this is the kind of data that the function will return, this type is the same as the one listed in the <a href="#variables" title="Variables">variables</a> section, or <code>void</code> for a function which <b>does not</b> return anything (i.e a function that does a task like print something). General syntax:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">&lt;data_type&gt; &lt;funct_name&gt;(&lt;data_type&gt; &lt;name_within_funct&gt;, [more]) {
+    // do this
+    // maybe return &lt;value&gt;;
+}</pre>
+                    <p>Example of function that has return:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">float add(float num1, float num2) {
+    float result = num1 + num2;
+    return result;
+}</pre>
+                    <p>Example of function that no return:</p>
+                    <pre><img src="assets/img/arduino.png" alt="Arduino" class="pull-right" width="40">void sayName(String name) {
+    Serial.println(name);
+}</pre>
+                </div>
+            </div>
+			<a href="" id="click-me">click me</a>
+				<script>
+$('#click-me').click(function (event) {
+  event.preventDefault();
+  $('#go-to-top').scrollView();
+});
+	</script>
+        </div>
+    </div>
+</div>
+</body>
+</html>
